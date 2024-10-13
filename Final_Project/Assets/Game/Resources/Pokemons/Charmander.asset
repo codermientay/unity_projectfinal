@@ -27,11 +27,13 @@ MonoBehaviour:
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: e559f1ca450c1ba488b150a253e962ed, type: 2}
     level: 1
+  - moveBase: {fileID: 11400000, guid: b15c90e8976105342bccd9debd02c423, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 811abf2d466d473479fa4b637e8d976a, type: 2}
+    level: 1
   - moveBase: {fileID: 11400000, guid: cc69ef16bd9ab074694f1e706828384a, type: 2}
-    level: 3
-  - moveBase: {fileID: 11400000, guid: 5bcf1651053888a45bdb4177085fd326, type: 2}
-    level: 5
-  - moveBase: {fileID: 11400000, guid: 025c1b2ad0eeb0f47ad4be0b289ae83c, type: 2}
-    level: 7
-  - moveBase: {fileID: 11400000, guid: 2f82200e4c941fe49b444ca0ccb0421c, type: 2}
     level: 10
+  - moveBase: {fileID: 11400000, guid: 025c1b2ad0eeb0f47ad4be0b289ae83c, type: 2}
+    level: 15
+  - moveBase: {fileID: 11400000, guid: 2f82200e4c941fe49b444ca0ccb0421c, type: 2}
+    level: 20
