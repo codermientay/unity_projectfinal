@@ -31,7 +31,6 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
 
         yield return dialogBox.TypeDialog($"Một {enemyUnit.Pokemon.Base.Name} hoang dã xuất hiện.");
-        yield return new WaitForSeconds(1f);
 
         PlayerAction();
     }
@@ -56,11 +55,10 @@ public class BattleSystem : MonoBehaviour
         var move = playerUnit.Pokemon.Moves[currentMove];
         yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} thi triển {move.Base.Name}");
 
-        yield return new WaitForSeconds(1f);
-
-        bool isFainted = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
-        enemyHud.UpdateHP();
-        if (isFainted)
+        var damageDetails = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
+        yield return enemyHud.UpdateHP();
+        yield return ShowDamageDetails(damageDetails);
+        if (damageDetails.Fainted)
         {
             yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} đã bị hạ gục");
         }
@@ -69,6 +67,15 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(EnemyMove());
         }
     }
+    IEnumerator ShowDamageDetails(DamageDetails damageDetails)
+    {
+        if (damageDetails.Critical > 1f)
+            yield return dialogBox.TypeDialog("Đó là một đòn chí mạng!");
+        if(damageDetails.TypeEffectiveness > 1f)
+            yield return dialogBox.TypeDialog("Đòn đánh rất hiệu quả!");
+        else if (damageDetails.TypeEffectiveness < 1f)
+            yield return dialogBox.TypeDialog("Đòn đánh không thực sự hiệu quả!");
+    }
 
     IEnumerator EnemyMove()
     {
@@ -76,11 +83,10 @@ public class BattleSystem : MonoBehaviour
         var move = enemyUnit.Pokemon.GetRandomMove();
         yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} thi triển {move.Base.Name}");
 
-        yield return new WaitForSeconds(1f);
-
-        bool isFainted = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
-        playerHud.UpdateHP();
-        if (isFainted)
+        var damageDetails = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
+        yield return playerHud.UpdateHP();
+        yield return ShowDamageDetails(damageDetails);
+        if (damageDetails.Fainted)
         {
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} đã bị hạ gục");
         }
