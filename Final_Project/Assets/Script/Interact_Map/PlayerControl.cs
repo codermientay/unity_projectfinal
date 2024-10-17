@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,4 +34,5 @@ public class PlayerControl : MonoBehaviour
         // Move player
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
+
 }
