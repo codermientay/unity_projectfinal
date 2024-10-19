@@ -13,7 +13,7 @@ public class AutoMove : MonoBehaviour
     public Animator animator;
 
     // Thêm biến để lưu trữ trạng thái dừng
-    public bool isStop;
+    public bool isStop = false;
 
     // Tham chiếu đến stopPoint
     public stopPoint stopPointScript;
