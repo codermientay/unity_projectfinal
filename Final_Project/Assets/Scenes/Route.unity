@@ -12309,6 +12309,7 @@ MonoBehaviour:
   enemyUnit: {fileID: 91243974}
   dialogBox: {fileID: 865636472}
   partyScreen: {fileID: 1822472375}
+  pokeballSprite: {fileID: 3958893723836378501, guid: 0ae8100eaf5b1e646af48e76d750a235, type: 3}
 --- !u!4 &629690067
 Transform:
   m_ObjectHideFlags: 0
@@ -28316,7 +28317,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 429542845
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &1287745138
@@ -29151,15 +29152,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wildPokemons:
   - _base: {fileID: 11400000, guid: c95bb11f28c9eb3429948aac5de7e973, type: 2}
-    level: 5
-  - _base: {fileID: 11400000, guid: c95bb11f28c9eb3429948aac5de7e973, type: 2}
-    level: 6
-  - _base: {fileID: 11400000, guid: c95bb11f28c9eb3429948aac5de7e973, type: 2}
-    level: 7
-  - _base: {fileID: 11400000, guid: c95bb11f28c9eb3429948aac5de7e973, type: 2}
     level: 8
   - _base: {fileID: 11400000, guid: c95bb11f28c9eb3429948aac5de7e973, type: 2}
     level: 9
+  - _base: {fileID: 11400000, guid: 1dbd471d6c8003241bb91515d78d086d, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 1dbd471d6c8003241bb91515d78d086d, type: 2}
+    level: 10
 --- !u!1001 &1510461802
 PrefabInstance:
   m_ObjectHideFlags: 0
