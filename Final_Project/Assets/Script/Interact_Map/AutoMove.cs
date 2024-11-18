@@ -17,55 +17,60 @@ public class AutoMove : MonoBehaviour
 
     // Tham chiếu đến stopPoint
     public stopPoint stopPointScript;
-    private Vector2 old;
+    private Vector3 old;
+    private List<Vector3> path; // Danh sách vị trí từ A*
+    private int currentTargetIndex = 0; // Chỉ số vị trí mục tiêu hiện tại
+
+    public Grid_HomeMade grid_HomeMade;
+
+    private A_Star aStar; // Tham chiếu tới lớp A_Star
+
     void Start()
     {
-        old = this.transform.position;
-        if (stopPointScript != null)
-        {
-            isStop = stopPointScript.isStop;
-            Debug.Log("Vị trí stopPoint: " + stopPointScript.transform.position);
-        }
+        path = new List<Vector3>();
+        aStar = new A_Star(grid_HomeMade.grid, grid_HomeMade.tilemap, grid_HomeMade.x_left, grid_HomeMade.x_right, grid_HomeMade.y_up, grid_HomeMade.y_down);
+        Vector3 start = transform.position; // Vị trí hiện tại của NPC
+        Vector3 goal = new Vector3(10, -4, 0); // Mục tiêu
 
+        path = aStar.FindPath(start, goal);
     }
     void Update()
     {
-        if (stopPointScript.isStop && stopPointScript.face == 0)
-        {
-            movement.y = -1;
 
-            this.GetComponent<BoxCollider2D>().isTrigger = false;
+    }
+    // void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Player"))
+    //     {
+    //         Debug.Log("Đã chạm vào player");
+    //         stopPointScript.setIsStop(false);
+    //         animator.SetFloat("speed", 0);
+    //         this.isStop = true;
+    //     }
+    // }
+    void FixedUpdate()
+    {
+        if (path != null && currentTargetIndex < path.Count && !isStop)
+        {
+            Vector3 targetPosition = path[currentTargetIndex];
+            Vector2 direction = ((Vector2)targetPosition - rb.position).normalized;
+
+            rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+
+            // Cập nhật animation
+            animator.SetFloat("Horizontal", direction.x);
+            animator.SetFloat("Vertical", direction.y);
+            animator.SetFloat("Speed", direction.sqrMagnitude);
+
+            // Kiểm tra nếu đã đến gần mục tiêu hiện tại
+            if (Vector2.Distance(rb.position, targetPosition) < 0.1f)
+            {
+                currentTargetIndex++;
+            }
         }
         else
         {
-            movement.y = 0;
-            movement.x = 0;
+            animator.SetFloat("Speed", 0);
         }
-
-        // Set animation parameters
-        animator.SetFloat("moveX", movement.x);
-        animator.SetFloat("moveY", movement.y);
-        animator.SetFloat("speed", movement.sqrMagnitude);
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Đã chạm vào player");
-            stopPointScript.setIsStop(false);
-            animator.SetFloat("speed", 0);
-            this.isStop = true;
-        }
-    }
-    void FixedUpdate()
-    {
-        // Normalize movement to avoid faster diagonal movement
-        if (movement.magnitude > 1)
-        {
-            movement = movement.normalized;
-        }
-
-        // Move NPC
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }
