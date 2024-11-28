@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25d0fbf746819c4ebbed14f25bea9d5, type: 3}
+  m_Name: Tentacool
+  m_EditorClassIdentifier: 
+  name: Tentacool
+  description: 
+  frontSprite: {fileID: 21300000, guid: abc793b8f5371684b9a1f0ca534399af, type: 3}
+  backSprite: {fileID: 21300000, guid: 53540c0abf1ea384ca9f06058ce8e501, type: 3}
+  type1: 3
+  type2: 8
+  maxHP: 40
+  attack: 40
+  defense: 35
+  spAttack: 50
+  spDefense: 100
+  speed: 70
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: ab5006e9250273f4da760a68046387d9, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 387b5418745064941942dfeda6b269eb, type: 2}
+    level: 2
+  - moveBase: {fileID: 11400000, guid: 3c84b0f089a57e94291e4ddae9214d55, type: 2}
+    level: 4
+  - moveBase: {fileID: 11400000, guid: 3c5bdb987b0c3a34e8effe8b9b058f9e, type: 2}
+    level: 10
+  - moveBase: {fileID: 11400000, guid: f9a09abb0e63ac64cb78a476a7368cba, type: 2}
+    level: 20
