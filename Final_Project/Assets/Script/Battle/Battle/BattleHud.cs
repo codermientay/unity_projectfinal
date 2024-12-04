@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,18 @@ public class BattleHud : MonoBehaviour
 {
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
+    [SerializeField] Text statusText;
     [SerializeField] HPBar hpBar;
+    [SerializeField] GameObject expBar;
+
+    [SerializeField] Color psnColor;
+    [SerializeField] Color brnColor;
+    [SerializeField] Color frzColor;
+    [SerializeField] Color slpColor;
+    [SerializeField] Color parColor;
 
     Pokemon _pokemon;
+    Dictionary<ConditionID, Color> statusColors;
     public void SetData(Pokemon pokemon)
     {
         _pokemon = pokemon;
@@ -17,10 +27,66 @@ public class BattleHud : MonoBehaviour
         nameText.text = pokemon.Base.Name;
         levelText.text = "Lvl "+ pokemon.Level;
         hpBar.SetHP((float) pokemon.HP / pokemon.MaxHP);
+        SetExp();
+
+        statusColors = new Dictionary<ConditionID, Color>()
+        {
+            {ConditionID.psn, psnColor },
+            {ConditionID.brn, brnColor },
+            {ConditionID.frz, frzColor },
+            {ConditionID.slp, slpColor },
+            {ConditionID.par, parColor }
+        };
+
+        SetStatusText();
+        _pokemon.OnStatusChanged += SetStatusText;
+    }
+
+    void SetStatusText()
+    {
+        if(_pokemon.Status == null)
+        {
+            statusText.text = "";
+        }
+        else
+        {
+            statusText.text = _pokemon.Status.Id.ToString().ToUpper();
+            statusText.color = statusColors[_pokemon.Status.Id];
+        }
+    }
+    public void SetExp()
+    {
+        if (expBar == null) return;
+
+        float normalizedExp = GetNormalizedExp();
+        expBar.transform.localScale = new Vector3(normalizedExp, 1, 1);
+
+    }
+
+    public IEnumerator SetExpSmooth()
+    {
+        if (expBar == null) yield break;
+
+        float normalizedExp = GetNormalizedExp();
+        yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
+    }
+
+    float GetNormalizedExp()
+    {
+        int currLevelExp = _pokemon.Base.GetExpForLevel(_pokemon.Level);
+        int nextLevelExp = _pokemon.Base.GetExpForLevel(_pokemon.Level + 1);
+
+        float normalizeExp = (float)(_pokemon.Exp - currLevelExp) / (nextLevelExp - currLevelExp);
+        return Mathf.Clamp01(normalizeExp);
     }
 
     public IEnumerator UpdateHP()
     {
-        yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHP);
+        if (_pokemon.HpChanged)
+        {
+            yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHP);
+            _pokemon.HpChanged = false;
+        }
+        
     }
 }

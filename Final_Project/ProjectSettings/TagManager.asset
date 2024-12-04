@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - sight
   layers:
   - Default
   - TransparentFX
@@ -11,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - LongGrass
   - 
   - 
   - 
@@ -41,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Foreground
+    uniqueID: 2067457031
+    locked: 0
   - name: Player
     uniqueID: 1023404567
+    locked: 0
+  - name: Battle
+    uniqueID: 2796915177
     locked: 0
