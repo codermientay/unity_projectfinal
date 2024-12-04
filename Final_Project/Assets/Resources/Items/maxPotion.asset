@@ -21,3 +21,5 @@ MonoBehaviour:
   restoreMaxPP: 0
   revive: 0
   maxRevie: 0
+  price: 1000
+  isSell: 0

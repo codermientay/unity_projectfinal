@@ -17,4 +17,5 @@ public class recoveryItem : baseItem
     [Header("Hồi sinh")]
     [SerializeField] bool revive;
     [SerializeField] bool maxRevie;
+
 }

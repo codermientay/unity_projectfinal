@@ -14,6 +14,13 @@ public class PlayerControl : MonoBehaviour
     public Rigidbody2D rb;
     Vector2 movement;
     public Animator animator;
+
+    [SerializeField] public float money;
+
+    public void setMoney(float money){
+        this.money = money;
+    }
+
     void Update()
     {
         if (dialougeUI.isOpen) return;

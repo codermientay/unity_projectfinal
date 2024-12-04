@@ -10,7 +10,7 @@ public class Slots : MonoBehaviour
     public void SetSlot(baseItem item, int count)
     {
         nameText.text = item.Name;
-        countText.text = count.ToString();
+        countText.text = "X" + count.ToString();
     }
 
     public void Highlight(bool isSelected)
