@@ -13,10 +13,26 @@ public class GameController : MonoBehaviour
     [SerializeField] InventoryUI bag;
     [SerializeField] InventoryShopUI shop;
     GameState state;
+    private void Awake()
+    {
+        ConditionDB.Init();
+    }
+
     private void Start()
     {
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
+
+        //DialogManager.Instance.OnShowDialog += () =>
+        //{
+        //    state = GameState.Dialog;
+        //};
+        //DialogManager.Instance.OnCloseDialog += () =>
+        //{
+        //    if (state == GameState.Dialog)
+        //        state = GameState.FreeRoam;
+        //};
+
     }
     public void ChangeGameStateToShop()
     {
@@ -31,7 +47,9 @@ public class GameController : MonoBehaviour
         var playerParty = playerController.GetComponent<PokemonParty>();
         var wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
 
-        battleSystem.StartBattle(playerParty, wildPokemon);
+        var wildPokemonCopy = new Pokemon(wildPokemon.Base, wildPokemon.Level);
+
+        battleSystem.StartBattle(playerParty, wildPokemonCopy);
     }
     void EndBattle(bool won)
     {
@@ -40,6 +58,7 @@ public class GameController : MonoBehaviour
         worldCamera.gameObject.SetActive(true);
 
     }
+
     private void Update()
     {
         if (state == GameState.FreeRoam)
