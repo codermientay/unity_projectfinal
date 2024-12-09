@@ -1,7 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +9,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Slots itemPrefab; // Prefab cho mỗi item slot
     [SerializeField] UnityEngine.UI.Image icon;
     [SerializeField] Text describtion;
+    [SerializeField] GameObject Bag;
+
+    public bool isBagActive;
 
     Inventory inventory; // Tham chiếu đến Inventory
     private int selected = 0;
@@ -32,6 +33,15 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    public void ToggleBag()
+    {
+        // Kiểm tra phím L để đóng/mở túi
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            isBagActive = false; // Chuyển trạng thái túi
+            Bag.SetActive(false); // Hiển thị/ẩn túi
+        }
+    }
     public void UpdateUI()
     {
         // Xóa tất cả các item cũ trong danh sách
@@ -52,11 +62,6 @@ public class InventoryUI : MonoBehaviour
         }
 
         UpdateItems(); // Cập nhật hiển thị
-    }
-
-    private void Update()
-    {
-        HandleMenuNavigation();
     }
 
     public void HandleMenuNavigation()

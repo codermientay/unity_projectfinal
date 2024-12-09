@@ -8,19 +8,13 @@ public class SlotsShop : MonoBehaviour
     [SerializeField] private Text countText; // Số lượng item
     [SerializeField] private Text priceText; // Giá item
 
-    [SerializeField] private Text total;
-
     public void SetSlot(baseItem item, int count)
     {
         nameText.text = item.Name;
         countText.text = "X" + count.ToString();
-        Debug.Log("chay toi day r!!");
+        // Debug.Log("chay toi day r!!");
         priceText.text = item.Pricebuy.ToString() + "$";
-        Debug.Log("CC " + item.Pricebuy.ToString());
-    }
-    public void SeTotal(baseItem item, int count)
-    {
-        Debug.Log("ccc!!!!!!!!!!!!!!!!");
+        // Debug.Log("CC " + item.Pricebuy.ToString());
     }
     public void Highlight(bool isSelected)
     {

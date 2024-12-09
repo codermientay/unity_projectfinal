@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class InventoryShopUI : MonoBehaviour
@@ -19,10 +14,11 @@ public class InventoryShopUI : MonoBehaviour
 
     [SerializeField] private Text totalPlayer;
     [SerializeField] private Text total;
-
     Shop shop; // Tham chiếu đến Inventory
     private int selected = 0;
     private List<SlotsShop> slotsUI = new List<SlotsShop>(); // Danh sách các UI Slots
+    [SerializeField] GameObject ShopUI;
+
 
     private void Start()
     {
@@ -67,9 +63,13 @@ public class InventoryShopUI : MonoBehaviour
         UpdateItems(); // Cập nhật hiển thị
     }
 
-    private void Update()
+    public void ToggleBag()
     {
-        HandleMenuNavigation();
+        // Kiểm tra phím L để đóng/mở túi
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ShopUI.SetActive(false); // Hiển thị/ẩn túi
+        }
     }
 
     public void HandleMenuNavigation()

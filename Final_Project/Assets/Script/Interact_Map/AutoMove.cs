@@ -43,11 +43,11 @@ public class AutoMove : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 continue;
             }
-            UnityEngine.Debug.Log("Đường đi được tìm thấy: ");
-            foreach (var pos in path)
-            {
-                UnityEngine.Debug.Log(pos);
-            }
+            // UnityEngine.Debug.Log("Đường đi được tìm thấy: ");
+            // foreach (var pos in path)
+            // {
+            //     UnityEngine.Debug.Log(pos);
+            // }
 
 
             currentTargetIndex = 0; // Reset chỉ số mục tiêu

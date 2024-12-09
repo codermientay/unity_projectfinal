@@ -1930,7 +1930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4528791277742469305
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2407,3 +2407,5 @@ MonoBehaviour:
   itemPrefab: {fileID: -1865646902330546918, guid: 8eb170f330d805446b749e798682f148, type: 3}
   icon: {fileID: 5375200630300803065}
   describtion: {fileID: 6228209757116375246}
+  Bag: {fileID: 0}
+  isBagActive: 0

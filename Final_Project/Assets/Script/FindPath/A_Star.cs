@@ -85,7 +85,7 @@ public class A_Star : MonoBehaviour
             {
                 current.checkFlag = true;
                 count++;
-                Debug.Log("-------------------------------Lần chạy số : " + i + "-------------------------------");
+                // Debug.Log("-------------------------------Lần chạy số : " + i + "-------------------------------");
                 List<Node> neiboughs = getNeighbors(current, map, listChecked);
                 int num = 0; //cái này để debbug
                 foreach (Node neibough in neiboughs)
@@ -95,15 +95,15 @@ public class A_Star : MonoBehaviour
                     neibough.parent = current;
                     neibough.gCost += current.gCost + 1;
                     neibough.hCost = getDistance(neibough, Goal);
-                    Debug.Log("Mình đang check cái này!!!!!: " + neibough.fCost + " => Với tọa dộ là: " + neibough.position);
+                    // Debug.Log("Mình đang check cái này!!!!!: " + neibough.fCost + " => Với tọa dộ là: " + neibough.position);
 
 
 
                 }
                 listChecked.Add(current);
                 current = findMin(neiboughs);
-                Debug.Log("Min: " + current.position + " với fCost: " + current.fCost);
-                Debug.Log("-------------------------------Lần chạy số : " + i + " Có (" + num + ") hàng xóm -------------------------------");
+                // Debug.Log("Min: " + current.position + " với fCost: " + current.fCost);
+                // Debug.Log("-------------------------------Lần chạy số : " + i + " Có (" + num + ") hàng xóm -------------------------------");
                 i++;
                 if (count > maxIterations)
                 {
@@ -114,11 +114,11 @@ public class A_Star : MonoBehaviour
             if (current.position == goal)
             {
                 List<Vector3> path = ReconstructPath(new Node(start), current);
-                Debug.Log("Đường đi được tìm thấy: ");
-                foreach (var pos in path)
-                {
-                    Debug.Log(pos);
-                }
+                // Debug.Log("Đường đi được tìm thấy: ");
+                // foreach (var pos in path)
+                // {
+                //     Debug.Log(pos);
+                // }
                 return path; // Kết thúc vì đã tìm được đường đi
             }
             Debug.Log(grid.toString(map));
@@ -254,19 +254,19 @@ public class A_Star : MonoBehaviour
     {
 
         Vector3 v = new Vector3(19, 7, 0);
-        Debug.Log(IsInGrid(v));
+        // Debug.Log(IsInGrid(v));
         Node a = new Node(new Vector3(19, 8, 0));
         Node b = new Node(new Vector3(19, 7, 0));
 
         Node c = new Node(v);
-        Debug.Log(getDistance(a, b));
+        // Debug.Log(getDistance(a, b));
 
         Vector3 s = new Vector3(0, -5, 0);
         Vector3 g = new Vector3(3, -9, 0);
         FindPath(s, g);
 
-        Debug.Log("Chỗ này đi: " + isWalkable(new Vector3(0, 4, 0), grid.changeTocoordinates(grid.gridMatrixForTile(grid.tilemap))));
-        Debug.Log(grid.toString(grid.changeTocoordinates(grid.gridMatrixForTile(grid.tilemap))));
+        // Debug.Log("Chỗ này đi: " + isWalkable(new Vector3(0, 4, 0), grid.changeTocoordinates(grid.gridMatrixForTile(grid.tilemap))));
+        // Debug.Log(grid.toString(grid.changeTocoordinates(grid.gridMatrixForTile(grid.tilemap))));
 
     }
 }

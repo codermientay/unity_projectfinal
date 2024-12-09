@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle }
+public enum GameState { FreeRoam, Battle, Menu, Bag, Shop }
 public class GameController : MonoBehaviour
 {
-    [SerializeField] Control playerController;
+    [SerializeField] PlayerControl playerController;
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
+    [SerializeField] MenuControl menu;
+    [SerializeField] InventoryUI bag;
+    [SerializeField] InventoryShopUI shop;
     GameState state;
     private void Start()
     {
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
     }
-
+    public void ChangeGameStateToShop()
+    {
+        state = GameState.Shop;
+    }
     void StartBattle()
     {
         state = GameState.Battle;
@@ -37,14 +44,59 @@ public class GameController : MonoBehaviour
     {
         if (state == GameState.FreeRoam)
         {
+            if (menu.isMenuActive)
+            {
+                return; // Nếu menu đang mở, không xử lý di chuyển
+            }
+
             playerController.HandleUpdate();
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                state = GameState.Menu;
+                menu.ToggleMenu();
+            }
         }
         else if (state == GameState.Battle)
         {
             battleSystem.HanldeUpdate();
+            playerController.movement.x = 0;
+            playerController.movement.y = 0;
+            playerController.animator.SetFloat("speed", 0);
         }
+        else if (state == GameState.Menu)
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                menu.ToggleMenu();
+                state = GameState.FreeRoam;
+            }
+            menu.HandleMenuNavigation();
+            if (menu.selected == 1 && menu.isOpen) // Nếu mở bag từ menu
+            {
+                state = GameState.Bag;
+                bag.isBagActive = true;
+            }
+        }
+        else if (state == GameState.Bag)
+        {
 
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                menu.isOpen = false;
+                bag.ToggleBag();
+                state = GameState.Menu;
+            }
+            bag.HandleMenuNavigation();
+        }
+        else if (state == GameState.Shop)
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                shop.ToggleBag();
+                state = GameState.FreeRoam;
+            }
+            shop.HandleMenuNavigation();
+        }
     }
-
-
 }

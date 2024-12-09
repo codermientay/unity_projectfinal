@@ -11,14 +11,16 @@ public class MenuControl : MonoBehaviour
     [SerializeField] GameObject menu; // Tham chiếu đến menu
     [SerializeField] GameObject bag; //  Tham chiếu đến túi
     private List<Text> menuItems; // Danh sách các mục trong menu
-    private int selected = 0; // Mục được chọn hiện tại
-    private bool isMenuActive = false; // Trạng thái mở/đóng menu
-    private bool isOpen = false; // Trạng thái mở/đóng menu
+    public int selected = 0; // Mục được chọn hiện tại
+    public bool isMenuActive = false; // Trạng thái mở/đóng menu
+    public bool isOpen = false; // Trạng thái mở/đóng menu
+    private PlayerControl playerControl;
     void Start()
     {
         // Lấy tất cả các TextMeshPro từ các mục con trong menu
         menuItems = menu.GetComponentsInChildren<Text>().ToList();
         menu.SetActive(false); // Ẩn menu ban đầu
+        playerControl = this.GetComponent<PlayerControl>();
     }
 
     public void ToggleMenu()
@@ -30,13 +32,20 @@ public class MenuControl : MonoBehaviour
             menu.SetActive(isMenuActive);
             // Tắt script PlayerControl trên đối tượng hiện tại
             if (isMenuActive)
-                // Tắt script PlayerControl trên đối tượng hiện tại
+            {
+                playerControl.isStop = true;
+                playerControl.animator.SetFloat("speed", 0);
                 this.GetComponent<PlayerControl>().enabled = false;
+
+
+            }
+            // Tắt script PlayerControl trên đối tượng hiện tại
+
             else
             {
                 // Tắt script PlayerControl trên đối tượng hiện tại
                 this.GetComponent<PlayerControl>().enabled = true;
-
+                playerControl.isStop = false;
             }
 
 
@@ -75,6 +84,8 @@ public class MenuControl : MonoBehaviour
         {
             if (isOpen)
             {
+                menu.SetActive(true);
+                isMenuActive = true;
                 bag.SetActive(false);
                 isOpen = false;
             }
@@ -106,9 +117,9 @@ public class MenuControl : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        ToggleMenu(); // Xử lý việc mở/đóng menu
-        HandleMenuNavigation(); // Xử lý điều hướng menu
-    }
+    // private void Update()
+    // {
+    //     ToggleMenu(); // Xử lý việc mở/đóng menu
+    //     HandleMenuNavigation(); // Xử lý điều hướng menu
+    // }
 }
