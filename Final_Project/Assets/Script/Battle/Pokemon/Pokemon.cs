@@ -134,6 +134,22 @@ public class Pokemon
             Debug.Log($"{stat} đã được tăng lên {StatBoosts[stat]}");
         }
     }
+    public bool CheckForLevelUp()
+    {
+        if(Exp > Base.GetExpForLevel(level + 1))
+        {
+            ++level;
+            return true;
+        }
+        return false;
+    }
+
+    public void Heal()
+    {
+        HP = MaxHP;
+        //OnHPChanged?.Invoke();
+    }
+
     public int Attack
     {
         get { return GetStat(Stat.Attack); }

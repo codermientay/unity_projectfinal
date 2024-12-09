@@ -7,6 +7,7 @@ public class PokemonParty : MonoBehaviour
 {
     [SerializeField]    List<Pokemon> pokemons;
 
+
     public List<Pokemon> Pokemons
     {
         get
@@ -25,6 +26,11 @@ public class PokemonParty : MonoBehaviour
     public Pokemon GetHealthyPokemon()
     {
         return pokemons.Where(x => x.HP > 0).FirstOrDefault();
+    }
+
+    public void PartyUpdated()
+    {
+        //OnUpdated?.Invoke();
     }
 
     public void AddPokemon(Pokemon newPokemon)
