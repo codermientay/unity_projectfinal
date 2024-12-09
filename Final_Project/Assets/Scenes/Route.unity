@@ -12214,7 +12214,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 2097869557}
   levelText: {fileID: 221078544}
+  statusText: {fileID: 0}
   hpBar: {fileID: 301983978}
+  expBar: {fileID: 0}
+  psnColor: {r: 0, g: 0, b: 0, a: 0}
+  brnColor: {r: 0, g: 0, b: 0, a: 0}
+  frzColor: {r: 0, g: 0, b: 0, a: 0}
+  slpColor: {r: 0, g: 0, b: 0, a: 0}
+  parColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &592481851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12429,6 +12436,7 @@ MonoBehaviour:
   enemyUnit: {fileID: 91243974}
   dialogBox: {fileID: 865636472}
   partyScreen: {fileID: 1822472375}
+  pokeballSprite: {fileID: 7992739332814517773, guid: 5f578c3c8aede3444ba57e5158473cfe, type: 3}
 --- !u!4 &629690067
 Transform:
   m_ObjectHideFlags: 0
@@ -28349,6 +28357,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokemons:
+  - _base: {fileID: 11400000, guid: 801100e79f4c2bc4b91d40a8d12adb7f, type: 2}
+    level: 30
   - _base: {fileID: 11400000, guid: d0301540c01f01641b96dbd8db09de90, type: 2}
     level: 10
 --- !u!50 &1115333682
@@ -39308,7 +39318,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 215998894}
   levelText: {fileID: 1594963416}
+  statusText: {fileID: 0}
   hpBar: {fileID: 848274059}
+  expBar: {fileID: 0}
+  psnColor: {r: 0, g: 0, b: 0, a: 0}
+  brnColor: {r: 0, g: 0, b: 0, a: 0}
+  frzColor: {r: 0, g: 0, b: 0, a: 0}
+  slpColor: {r: 0, g: 0, b: 0, a: 0}
+  parColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1259891846
 GameObject:
   m_ObjectHideFlags: 0
