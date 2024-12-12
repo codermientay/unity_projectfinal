@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1589a80ce3f2340939be52293feb40, type: 3}
+  m_Name: FirstMeet
+  m_EditorClassIdentifier: 
+  dialouge:
+  - "Ch\xE0o c\u1EADu! m\xECnh l\xE0 h\xE0ng x\xF3m \u1EDF k\u1EBF b\xEAn nh\xE0
+    c\u1EE7a c\u1EADu!!"
+  - "H\xF4m n\xE0y \u0111\u1EC1u l\xE0 ng\xE0y \u0111\u1EA7u trong cu\u1ED9c h\xE0nh
+    tr\xECnh c\u1EE7a ch\xFAng ta nh\u1EC9? c\xF9ng nhau c\u1ED1 g\u1EAFng nh\xE9,
+    t\u1EDB \u0111i tr\u01B0\u1EDBc \u0111\xE2y!"

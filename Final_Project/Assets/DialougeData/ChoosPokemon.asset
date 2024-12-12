@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1589a80ce3f2340939be52293feb40, type: 3}
+  m_Name: ChoosPokemon
+  m_EditorClassIdentifier: 
+  dialouge:
+  - "Con \u0111\xE3 \u0111\u1EE7 \u0111i\u1EC1u ki\u1EC7n \u0111\u1EC3 du h\xE0nh
+    c\xF9ng Pokemon!!"
+  - "Ch\xFAng ta \u0111\xE3 chu\u1EA9n b\u1ECB c\xE1c Pokemon kh\u1EDFi \u0111\u1EA7u
+    \u0111\u1EC3 du h\xE0nh c\xF9ng con, h\xE3y ch\u1ECDn 1!!"
+  - "T\u1EEB tr\xE1i sang ph\u1EA3i: Bulbasaur(H\u1EC7 c\u1ECF), Charmeloen(H\u1EC7
+    l\u1EEDa), Pikachu(H\u1EC7 \u0111i\u1EC7n)"

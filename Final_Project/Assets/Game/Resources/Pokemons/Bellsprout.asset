@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25d0fbf746819c4ebbed14f25bea9d5, type: 3}
+  m_Name: Bellsprout
+  m_EditorClassIdentifier: 
+  name: Bellsprout
+  description: 
+  frontSprite: {fileID: 21300000, guid: 9f7a2853f41b732438cabf620bb9007c, type: 3}
+  backSprite: {fileID: 21300000, guid: c943e83bc92f955458868c5cc6d92bc4, type: 3}
+  type1: 5
+  type2: 8
+  maxHP: 50
+  attack: 75
+  defense: 35
+  spAttack: 70
+  spDefense: 30
+  speed: 40
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: ec380fc9f07c5734fa48a5c9ee19d06e, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 811abf2d466d473479fa4b637e8d976a, type: 2}
+    level: 3
+  - moveBase: {fileID: 11400000, guid: 457aa13e81a359044a195e5cafa2dc4a, type: 2}
+    level: 7
+  - moveBase: {fileID: 11400000, guid: 3c84b0f089a57e94291e4ddae9214d55, type: 2}
+    level: 10
