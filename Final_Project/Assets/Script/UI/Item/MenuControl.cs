@@ -88,14 +88,21 @@ public class MenuControl : MonoBehaviour
             if (selected == 0)
             {
                 battleHUD.SetActive(true);
-                // party.Init();
+                party.Init();
                 party.SetPartyData(playerParty.Pokemons);
                 // Debug.Log("Lỗi ở đây!!!!");
-                PList.SetActive(true);
                 party.gameObject.SetActive(true);
                 party.gameObject.gameObject.SetActive(true);
                 isOpen = true;
-
+                PList.SetActive(true);
+            }
+            if (selected == 2)
+            {
+                SavingSystem.i.Save("saveSlot1");
+            }
+            if (selected == 3)
+            {
+                SavingSystem.i.Load("saveSlot1");
             }
         }
         if (Input.GetKeyDown(KeyCode.L)) // Xuống

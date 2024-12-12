@@ -46,7 +46,11 @@ public class BattleUnit : MonoBehaviour
         image.color = originalColor;
         PlayEnterAnimation();
     }
-    
+    public void Clear()
+    {
+        hud.gameObject.SetActive(false);
+    }
+
     public void PlayEnterAnimation()
     {
         if (isPlayerUnit)

@@ -17,8 +17,9 @@ GameObject:
   - component: {fileID: 8616539871902451259}
   - component: {fileID: 5744559620780132881}
   - component: {fileID: 5691281196349063641}
+  - component: {fileID: 1575317222963585539}
   m_Layer: 0
-  m_Name: 'Player '
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1535086709
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2013736516, guid: 2becb4d55428bfc44bf14a6e62eb3e69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -206,6 +207,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   bag: {fileID: 0}
+  selected: 0
+  isMenuActive: 0
+  isOpen: 0
+  playerParty: {fileID: 0}
+  party: {fileID: 0}
+  battleHUD: {fileID: 0}
+  PList: {fileID: 0}
 --- !u!114 &8616539871902451259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,12 +253,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dca6ab8193180f40818b96fc93e8e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlay: 0
   dialougeUI: {fileID: 7709163572940877408, guid: 8819b450de4a3e5488601919454e290f, type: 3}
+  camera: {fileID: 0}
+  name: 
+  sprite: {fileID: 0}
   moveSpeed: 5
   rb: {fileID: 5691281196349063641}
   movement: {x: 0, y: 0}
   animator: {fileID: 6910890736779729403}
   isStop: 0
+  gameData: {fileID: 0}
   money: 0
 --- !u!50 &5691281196349063641
 Rigidbody2D:
@@ -279,3 +292,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1575317222963585539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4649947009863436571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 

@@ -14,12 +14,13 @@ public class PartyScreen : MonoBehaviour
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
     }
-    public void SetPartyData(List<Pokemon> pokemons)
+
+   public void SetPartyData(List<Pokemon> pokemons)
     {
         this.pokemons = pokemons;
-        for (int i = 0; i < memberSlots.Length; i++)
+        for(int i = 0; i < memberSlots.Length; i++)
         {
-            if (i < pokemons.Count)
+            if(i < pokemons.Count)
             {
                 memberSlots[i].gameObject.SetActive(true);
                 memberSlots[i].SetData(pokemons[i]);
@@ -32,9 +33,9 @@ public class PartyScreen : MonoBehaviour
     }
     public void UpdateMemberSelection(int selectedMember)
     {
-        for (int i = 0; i < pokemons.Count; i++)
+        for(int i = 0;i< pokemons.Count;i++)
         {
-            if (i == selectedMember)
+            if(i == selectedMember)
                 memberSlots[i].SetSelected(true);
             else
                 memberSlots[i].SetSelected(false);

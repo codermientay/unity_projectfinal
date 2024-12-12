@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour, ISavable
 {
     public bool isPlay = false;
     [SerializeField] private DialougeUI dialougeUI;
     [SerializeField] public CinemachineVirtualCamera camera;
+    [SerializeField] string name;
+    [SerializeField] Sprite sprite;
     public DialougeUI DialougeUI => dialougeUI;
     private int confinerResetCount = 0;  // Biến đếm số lần gọi ResetConfiner
     public IInteractable Interactable { get; set; }
     public float moveSpeed = 5f;
     public event Action OnEncountered;
+    public event Action<Collider2D> OnEnterTrainersView;
     public Rigidbody2D rb;
     public Vector2 movement;
     public Animator animator;
@@ -24,6 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] public float money;
 
+    private bool hasTriggeredEncounter = false;
     private float moveTimer = 0f;  // Timer to track movement steps
     private const float stepInterval = 0.5f; // Interval for each step (0.5 seconds)
 
@@ -127,6 +131,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        var collider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.FovLayer);
         // Check if the player is on grass
         if (other.CompareTag("grass"))
         {
@@ -152,5 +157,41 @@ public class PlayerControl : MonoBehaviour
                 }
             }
         }
+
+        if (collider != null && !hasTriggeredEncounter)
+        {
+            hasTriggeredEncounter = true;
+            animator.SetFloat("speed", 0);
+            movement.x = 0;
+            movement.y = 0;
+            Debug.Log("!!!!!");
+            OnEnterTrainersView?.Invoke(collider);
+
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        hasTriggeredEncounter = false;
+    }
+
+    public object CaptureState()
+    {
+        float[] position = new float[] { transform.position.x, transform.position.y };
+        return position;
+    }
+
+    public void RestoreState(object state)
+    {
+        var position = (float[])state;
+        transform.position = new Vector3(position[0], position[1]);
+    }
+
+    public string Name
+    {
+        get => name;
+    }
+    public Sprite Sprite
+    {
+        get => sprite;
     }
 }
