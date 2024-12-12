@@ -3480,6 +3480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trainer (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3271448382829950297, guid: 4800c8299d2aa13448ab33aa95b0354d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4479018202908820325, guid: 4800c8299d2aa13448ab33aa95b0354d, type: 3}
       propertyPath: name
       value: "Trainer Rank V\xE0ng"
@@ -59438,7 +59442,8 @@ MonoBehaviour:
   bag: {fileID: 4247856598534079495}
   shop: {fileID: 471901141}
   gameData: {fileID: 969739266}
-  battleHUD: {fileID: 990790647}
+  battleHUD: {fileID: 1089805427}
+  battle_canvas: {fileID: 990790647}
   party_fix: {fileID: 554559520}
   menuUI: {fileID: 137040107090229921}
 --- !u!4 &498838688
@@ -99269,11 +99274,15 @@ PrefabInstance:
     - target: {fileID: 3729959298642266799, guid: cd64da9ade0491b4282cd3c9e35cb4c4, type: 3}
       propertyPath: battleHUD
       value: 
-      objectReference: {fileID: 990790647}
+      objectReference: {fileID: 1089805427}
     - target: {fileID: 3729959298642266799, guid: cd64da9ade0491b4282cd3c9e35cb4c4, type: 3}
       propertyPath: playerParty
       value: 
       objectReference: {fileID: 1577802911}
+    - target: {fileID: 3729959298642266799, guid: cd64da9ade0491b4282cd3c9e35cb4c4, type: 3}
+      propertyPath: battle_canvas
+      value: 
+      objectReference: {fileID: 990790647}
     - target: {fileID: 4649947009863436571, guid: cd64da9ade0491b4282cd3c9e35cb4c4, type: 3}
       propertyPath: m_Name
       value: 'Player '
@@ -103107,6 +103116,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1089805427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2145080187822081490, guid: 1584e01548ac4b7409f380aa2034652d, type: 3}
+  m_PrefabInstance: {fileID: 1717138832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1104875081
 GameObject:
   m_ObjectHideFlags: 0
@@ -128766,7 +128780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1347570455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -132451,7 +132465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1503541113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -135153,7 +135167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2484301350982254452, guid: 1584e01548ac4b7409f380aa2034652d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2565941466632099088, guid: 1584e01548ac4b7409f380aa2034652d, type: 3}
       propertyPath: m_Layer

@@ -14,13 +14,13 @@ public class MoveNextLevel : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Chuyển cảnh
-            loadLevel(sceneBuildindex);
+            loadLevel();
         }
     }
 
-    public void loadLevel(int index)
+    public void loadLevel()
     {
-        StartCoroutine(Loading_Asyn(index));
+        StartCoroutine(Loading_Asyn(0));
     }
 
     IEnumerator Loading_Asyn(int index)
@@ -35,4 +35,8 @@ public class MoveNextLevel : MonoBehaviour
             yield return null;
         }
     }
+    // public void Loading()
+    // {
+    //     AsyncOperation operation = SceneManager.LoadSceneAsync(0);
+    // }
 }

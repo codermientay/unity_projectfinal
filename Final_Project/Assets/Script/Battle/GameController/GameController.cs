@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Menu, Bag, Shop, Party, Cutscene , Save, Load }
+public enum GameState { FreeRoam, Battle, Menu, Bag, Shop, Party, Cutscene, Save, Load }
 public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerControl playerController;
@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     [SerializeField] InventoryShopUI shop;
     [SerializeField] GameData gameData;
     [SerializeField] GameObject battleHUD;
+    [SerializeField] GameObject battle_canvas;
     [SerializeField] GameObject party_fix;
     [SerializeField] GameObject menuUI;
     GameState state;
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour
     void StartBattle()
     {
         party_fix.SetActive(false);
+        battleHUD.SetActive(true);
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
@@ -67,12 +69,15 @@ public class GameController : MonoBehaviour
 
         battleSystem.StartBattle(playerParty, wildPokemonCopy);
     }
+    TrainerController trainer;
+
     public void StartTrainerBattle(TrainerController trainer)
     {
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
 
+        this.trainer = trainer;
         var playerParty = playerController.GetComponent<PokemonParty>();
         var trainerParty = trainer.GetComponent<PokemonParty>();
 
@@ -80,6 +85,12 @@ public class GameController : MonoBehaviour
     }
     void EndBattle(bool won)
     {
+        if (trainer != null && won == true)
+        {
+            trainer.BattleLost();
+            trainer = null;
+        }
+
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
@@ -120,7 +131,7 @@ public class GameController : MonoBehaviour
                 playerController.movement.y = 0;
                 playerController.animator.SetFloat("speed", 0);
             }
-            
+
         }
         else if (state == GameState.Battle)
         {
@@ -151,7 +162,7 @@ public class GameController : MonoBehaviour
             {
                 state = GameState.Save;
                 menuUI.SetActive(false);
-                
+
             }
             if (menu.selected == 3 && menu.isOpen) // Load
             {
@@ -175,8 +186,9 @@ public class GameController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.L))
             {
+                battle_canvas.SetActive(false);
                 menu.isOpen = false;
-                battleHUD.SetActive(false);
+                battleHUD.SetActive(false); /////
                 menuUI.SetActive(true);
                 state = GameState.Menu;
             }
@@ -208,6 +220,6 @@ public class GameController : MonoBehaviour
             }
             shop.HandleMenuNavigation();
         }
-        //Debug.Log("Trạng thái hiện tại: " + state);
+        Debug.Log("Trạng thái hiện tại: " + state);
     }
 }

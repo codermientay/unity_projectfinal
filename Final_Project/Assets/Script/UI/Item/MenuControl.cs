@@ -18,11 +18,12 @@ public class MenuControl : MonoBehaviour
     [SerializeField] PokemonParty playerParty;
     [SerializeField] PartyScreen party;
     [SerializeField] GameObject battleHUD;
+    [SerializeField] GameObject battle_canvas;
     [SerializeField] GameObject PList;
     void Start()
     {
         playerParty = this.GetComponent<PokemonParty>();
-        Debug.Log("Cái này có bị null không?: " + playerParty.pokemons.Count);
+        // Debug.Log("Cái này có bị null không?: " + playerParty.pokemons.Count);
         // Lấy tất cả các TextMeshPro từ các mục con trong menu
         menuItems = menu.GetComponentsInChildren<Text>().ToList();
         menu.SetActive(false); // Ẩn menu ban đầu
@@ -87,7 +88,9 @@ public class MenuControl : MonoBehaviour
             }
             if (selected == 0)
             {
+                battle_canvas.SetActive(true);
                 battleHUD.SetActive(true);
+                Debug.Log("aaaaa: " + battleHUD.activeSelf);
                 party.Init();
                 party.SetPartyData(playerParty.Pokemons);
                 // Debug.Log("Lỗi ở đây!!!!");
