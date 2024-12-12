@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Menu, Bag, Shop }
+public enum GameState { FreeRoam, Battle, Menu, Bag, Shop, Cutscene }
 public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerControl playerController;
@@ -13,8 +13,11 @@ public class GameController : MonoBehaviour
     [SerializeField] InventoryUI bag;
     [SerializeField] InventoryShopUI shop;
     GameState state;
+    public static GameController Instance { get; private set; }
+
     private void Awake()
     {
+        Instance = this;
         ConditionDB.Init();
     }
 
@@ -22,6 +25,16 @@ public class GameController : MonoBehaviour
     {
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
+
+        playerController.OnEnterTrainersView += (Collider2D trainerCollider) =>
+        {
+            var trainer = trainerCollider.GetComponentInParent<TrainerController>();
+            if(trainer != null)
+            {
+                state = GameState.Cutscene;
+                StartCoroutine(trainer.TriggerTrainerBattle(playerController));
+            }
+        };
 
         //DialogManager.Instance.OnShowDialog += () =>
         //{
@@ -51,6 +64,18 @@ public class GameController : MonoBehaviour
 
         battleSystem.StartBattle(playerParty, wildPokemonCopy);
     }
+
+    public void StartTrainerBattle(TrainerController trainer)
+    {
+        state = GameState.Battle;
+        battleSystem.gameObject.SetActive(true);
+        worldCamera.gameObject.SetActive(false);
+
+        var playerParty = playerController.GetComponent<PokemonParty>();
+        var trainerParty = trainer.GetComponent<PokemonParty>();
+
+        battleSystem.StartTrainerBattle(playerParty, trainerParty);
+    }
     void EndBattle(bool won)
     {
         state = GameState.FreeRoam;
@@ -74,6 +99,14 @@ public class GameController : MonoBehaviour
             {
                 state = GameState.Menu;
                 menu.ToggleMenu();
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                SavingSystem.i.Save("saveSlot1");
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                SavingSystem.i.Load("saveSlot1");
             }
         }
         else if (state == GameState.Battle)
@@ -117,5 +150,6 @@ public class GameController : MonoBehaviour
             }
             shop.HandleMenuNavigation();
         }
+        
     }
 }

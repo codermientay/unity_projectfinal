@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, BattleOver}
 public enum BattleAction { Move, SwitchPokemon, UseItem, Run}
@@ -13,6 +14,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleDialogBox dialogBox;
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] GameObject pokeballSprite;
+    [SerializeField] Image playerImage;
+    [SerializeField] Image trainerImage;
 
     public event Action<bool> OnBattleOver;
 
@@ -23,7 +26,12 @@ public class BattleSystem : MonoBehaviour
     int currentMember;
 
     PokemonParty playerParty;
+    PokemonParty trainerParty;
     Pokemon wildPokemon;
+
+    bool isTrainerBattle = false;
+    PlayerControl player;
+    TrainerController trainer;
 
     int escapeAttempts;
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon)
@@ -32,18 +40,67 @@ public class BattleSystem : MonoBehaviour
         this.wildPokemon = wildPokemon;
         StartCoroutine(SetupBattle());
     }
+    public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty)
+    {
+        this.playerParty = playerParty;
+        this.trainerParty = trainerParty;
 
+        isTrainerBattle = true;
+        player = playerParty.GetComponent<PlayerControl>();
+        trainer = trainerParty.GetComponent<TrainerController>();
+
+        StartCoroutine(SetupBattle());
+    }
     public IEnumerator SetupBattle()
     {
-        playerUnit.SetUp(playerParty.GetHealthyPokemon());
-        enemyUnit.SetUp(wildPokemon);
+        playerUnit.Clear();
+        enemyUnit.Clear();
+
+        if (!isTrainerBattle)
+        {
+            //Wild
+            playerUnit.SetUp(playerParty.GetHealthyPokemon());
+            enemyUnit.SetUp(wildPokemon);
+
+            dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+            yield return dialogBox.TypeDialog($"Một {enemyUnit.Pokemon.Base.Name} hoang dã xuất hiện.");
+
+        }
+        else
+        {
+           //Trainer
+
+            //Show trainer and player sprites
+            playerUnit.gameObject.SetActive(false);
+            enemyUnit.gameObject.SetActive(false);
+
+            playerImage.gameObject.SetActive(true);
+            trainerImage.gameObject.SetActive(true);
+            playerImage.sprite = player.Sprite;
+            trainerImage.sprite = trainer.Sprite;
+
+            yield return dialogBox.TypeDialog($"{trainer.Name} muốn đấu với bạn~");
+
+            //Send out 1st pkm
+            trainerImage.gameObject.SetActive(false);
+            enemyUnit.gameObject.SetActive(true);
+            var enemyPokemon = trainerParty.GetHealthyPokemon();
+            enemyUnit.SetUp(enemyPokemon);
+            yield return dialogBox.TypeDialog($"{trainer.Name} cho {enemyPokemon.Base.Name} xuất trận");
+
+            //send out 1st pkm
+            playerImage.gameObject.SetActive(false);
+            playerUnit.gameObject.SetActive(true);
+            var playerPokemon = playerParty.GetHealthyPokemon();
+            playerUnit.SetUp(playerPokemon);
+            yield return dialogBox.TypeDialog($"Ra trận đi nào {playerPokemon.Base.Name}!");
+            dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+        }
+
+        
 
         escapeAttempts = 0;
         partyScreen.Init();
-
-        dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
-
-        yield return dialogBox.TypeDialog($"Một {enemyUnit.Pokemon.Base.Name} hoang dã xuất hiện.");
 
         ActionSelection();
     }
@@ -284,10 +341,8 @@ public class BattleSystem : MonoBehaviour
             int expYield = faintedUnit.Pokemon.Base.ExpYield;
             int enemyLevel = faintedUnit.Pokemon.Level;
 
-            //float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
-            //int expGain = Mathf.FloorToInt(expYield * enemyLevel * trainerBonus) / 7;
-            
-            int expGain = Mathf.FloorToInt((expYield * enemyLevel * 1f) / 7);
+            float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
+            int expGain = Mathf.FloorToInt(expYield * enemyLevel * trainerBonus) / 7;
             playerUnit.Pokemon.Exp += expGain;
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} nhận được {expGain} kinh nghiệm");
             yield return playerUnit.Hud.SetExpSmooth();
@@ -318,7 +373,23 @@ public class BattleSystem : MonoBehaviour
                 BattleOver(false);
         }
         else
-            BattleOver(true);
+        {
+            if (!isTrainerBattle)
+            {
+                BattleOver(true);
+            }
+            else
+            {
+                var nextPokemonm = trainerParty.GetHealthyPokemon();
+                if (nextPokemonm != null)
+                {
+                   StartCoroutine(SendNextTrainerPokemon(nextPokemonm));
+                }
+                else
+                    BattleOver(true);
+            }
+        }
+            
     }
     public void HanldeUpdate()
     {
@@ -520,16 +591,25 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.RunningTurn;
     }
 
+    IEnumerator SendNextTrainerPokemon(Pokemon nextPokemon)
+    {
+        state = BattleState.Busy;
+
+        enemyUnit.SetUp(nextPokemon);
+        yield return dialogBox.TypeDialog($"{trainer.Name} cho {nextPokemon.Base.Name} ra trận!");
+        state = BattleState.RunningTurn;
+    }
+
     IEnumerator ThrowPokeball()
     {
         state = BattleState.Busy;
 
-        //if (isTrainerBattle)
-        //{
-        //    yield return dialogBox.TypeDialog($"Bạn không thể bắt Pokemon của trainers!");
-        //    state = BattleState.RunningTurn;
-        //    yield break;
-        //}
+        if (isTrainerBattle)
+        {
+            yield return dialogBox.TypeDialog($"Bạn không thể bắt Pokemon của trainers!");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
 
         yield return dialogBox.TypeDialog($"Bạn đã sử dụng Pokeball");
 
@@ -601,12 +681,12 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.Busy;
 
-        //if (isTrainerBattle)
-        //{
-        //    yield return dialogBox.TypeDialog($"Bạn không thể thoát khi đấu với trainer");
-        //    state = BattleState.RunningTurn;
-        //    yield break;
-        //}
+        if (isTrainerBattle)
+        {
+            yield return dialogBox.TypeDialog($"Bạn không thể thoát khi đấu với trainer");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
 
         ++escapeAttempts;
 
